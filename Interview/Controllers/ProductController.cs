@@ -1,8 +1,6 @@
-﻿using Interview.Repository;
-using System;
+﻿using Interview.Models;
+using Interview.Repository;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Interview.Controllers
@@ -16,6 +14,27 @@ namespace Interview.Controllers
             repository = new ProductRepository();
         }
 
+        public JsonResult GetAll()
+        {
+            var movies = new List<object>();
+
+            foreach (Product entry in repository.GetAll())
+            {
+                movies.Add(new { Id = entry.Id, Name = entry.Name, Price = entry.Price, Category = entry.Category, Supplier = entry.Supplier });
+            }
+
+            JsonResult result = Json(movies, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
+        public JsonResult Get(int id)
+        {
+            var movies = new List<object>();
+            movies.Add(repository.Get(id));
+            JsonResult result = Json(movies, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -23,8 +42,14 @@ namespace Interview.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
+            Product p = repository.Get(id);
+            ViewData["Id"] = p.Id;
+            ViewData["Name"] = p.Name;
+            ViewData["Category"] = p.Category;
+            ViewData["Price"] = p.Price;
+            ViewData["Supplier"] = p.Supplier;
             return View();
         }
     }

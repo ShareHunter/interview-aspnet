@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Products</h2>
+
+<div id="productList" class="list-group"></div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var actionUrl = '@Url.Action("GetAll", "Product")';
+        $.getJSON(actionUrl, displayData);
+    });
+
+    function displayData(response) {
+        if (response != null) {
+            for (var i = 0; i < response.length; i++) {
+                var id = response[i].Id;
+                $("#productList").append("<a href='/Product/Details/" + response[i].Id + "' class=\"list-group-item\">" + response[i].Name + "</a")
+            }
+        }
+    }
+</script>
