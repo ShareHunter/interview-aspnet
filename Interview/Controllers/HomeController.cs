@@ -5,14 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Interview.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace Interview.Controllers {
+    public class HomeController : Controller {
         [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
+        public ActionResult Index() {
+            return RedirectToAction("Index", "Product");
         }
     }
 }

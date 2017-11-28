@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Interview.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Products</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Product Name</th>
+            <th>More Info</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model) {
+            <tr>
+                <td>@product.Name</td>
+                <td>@Html.ActionLink("Details", "Details", new { id = product.Id }, new { @class = "btn btn-primary" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
